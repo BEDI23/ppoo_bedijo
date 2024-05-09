@@ -1,7 +1,6 @@
 package josue.services;
 
 import josue.entities.Sms;
-
 import java.util.List;
 
 public interface SmsService {
@@ -10,3 +9,4 @@ public interface SmsService {
     List<Sms> getAllSms();
     List<Sms> getPendingSms();
 }
+

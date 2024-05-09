@@ -7,8 +7,14 @@ public class Client {
     private String prenom;
     private String telephone;
 
-    public Client(int id, String nom, String prenom, String telephone) {
+    public Client(String telephone, String prenom, String nom, int id) {
+        this.telephone = telephone;
+        this.prenom = prenom;
+        this.nom = nom;
         this.id = id;
+    }
+
+    public Client(String nom, String prenom, String telephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
@@ -18,33 +24,31 @@ public class Client {
         return id;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
     }
 
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    public String getPrenom() {
+        return prenom;
+    }
+
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public String getTelephone() {
+        return telephone;
     }
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 }
-
