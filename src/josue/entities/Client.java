@@ -7,7 +7,7 @@ public class Client {
     private String prenom;
     private String telephone;
 
-    public Client(String telephone, String prenom, String nom, int id) {
+    public Client() {
         this.telephone = telephone;
         this.prenom = prenom;
         this.nom = nom;

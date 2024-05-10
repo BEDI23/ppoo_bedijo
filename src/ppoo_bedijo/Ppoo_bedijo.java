@@ -4,10 +4,12 @@
  */
 package ppoo_bedijo;
 
+import josue.entities.Client;
+import josue.managedbeans.ClientControleur;
 import josue.utils.Connexion;
-
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -18,8 +20,8 @@ public class Ppoo_bedijo {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        try {
+    public static void main(String[] args) throws SQLException {
+      /*  try {
             // Récupération de la connexion
             Connection connexion = Connexion.getConnection();
 
@@ -35,6 +37,12 @@ public class Ppoo_bedijo {
             connexion.close();
         } catch (SQLException e) {
             System.out.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
-        }    }
-    
+        }
+        */
+
+
+        }
+
+
+
 }

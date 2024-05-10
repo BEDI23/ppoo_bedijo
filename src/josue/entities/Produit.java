@@ -6,7 +6,7 @@ public class Produit {
     private String libelle;
     private String actif;
 
-    public Produit(int id, String libelle, String actif) {
+    public Produit() {
         this.id = id;
         this.libelle = libelle;
         this.actif = actif;
