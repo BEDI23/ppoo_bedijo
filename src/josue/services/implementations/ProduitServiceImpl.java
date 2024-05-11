@@ -1,3 +1,4 @@
+
 package josue.services.implementations;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ public class ProduitServiceImpl implements ProduitService {
     public List<Produit> getAllProduits() throws SQLException {
         List<Produit> produits = new ArrayList<>();
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM Produit";
+        String sql = "SELECT * FROM produit";
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -33,7 +34,7 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public Produit getProduitById(int idProduit)  throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM Produit WHERE id = ?";
+        String sql = "SELECT * FROM produit WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idProduit);
         ResultSet resultSet = statement.executeQuery();
@@ -51,7 +52,7 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public void addProduit(Produit produit) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "INSERT INTO Produit (libelle, actif) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO produit (libelle, actif) VALUES (?, ?)"; // Correction ici
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, produit.getLibelle());
         statement.setString(2, produit.getActif());
@@ -59,10 +60,11 @@ public class ProduitServiceImpl implements ProduitService {
         connection.close();
     }
 
+
     @Override
     public void updateProduit(Produit produit) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "UPDATE Produit SET libelle = ?, actif = ? WHERE id = ?";
+        String sql = "UPDATE produit SET libelle = ?, actif = ? WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, produit.getLibelle());
         statement.setString(2, produit.getActif());
@@ -74,7 +76,7 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public void deleteProduit(int idProduit) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "DELETE FROM Produit WHERE id = ?";
+        String sql = "DELETE FROM produit WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idProduit);
         statement.executeUpdate();

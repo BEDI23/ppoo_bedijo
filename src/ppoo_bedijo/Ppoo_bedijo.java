@@ -4,11 +4,15 @@
  */
 package ppoo_bedijo;
 
-import josue.entities.Client;
-import josue.managedbeans.ClientControleur;
-import josue.utils.Connexion;
-import java.sql.Connection;
+import josue.entities.Produit;
+import josue.entities.Sms;
+import josue.entities.Souscription;
+import josue.managedbeans.ProduitControleur;
+import josue.managedbeans.SmsControleur;
+import josue.managedbeans.SouscriptionControleur;
+
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,9 +44,31 @@ public class Ppoo_bedijo {
         }
         */
 
+        SmsControleur smsControleur = new SmsControleur();
 
+        // Création d'un SMS
+        Sms sms = new Sms(1, "Bonjour, ceci est un test de SMS !", true);
+
+        // Envoi du SMS
+        smsControleur.sendSms(sms);
+
+        // Récupération de tous les SMS
+        System.out.println("Tous les SMS : ");
+        List<Sms> allSms = smsControleur.getAllSms();
+        if (allSms != null) {
+            for (Sms s : allSms) {
+                System.out.println(s.getId() + ": " + s.getLibelle());
+            }
         }
 
+        // Récupération des SMS en attente
+        System.out.println("SMS en attente : ");
+        List<Sms> pendingSms = smsControleur.getPendingSms();
+        if (pendingSms != null) {
+            for (Sms s : pendingSms) {
+                System.out.println(s.getId() + ": " + s.getLibelle());
+            }
+        }
 
-
+        }
 }

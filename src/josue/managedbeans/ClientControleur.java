@@ -8,15 +8,25 @@ import java.util.List;
 
 public class ClientControleur {
 
-    private ClientService clientService =  new ClientServiceImpl();
+    private ClientService clientService = new ClientServiceImpl();
 
     public void addClient(Client client) throws SQLException {
         clientService.addClient(client);
     }
 
     public List<Client> getAllClients() throws SQLException {
-      return   clientService.getAllClients();
+        return clientService.getAllClients();
     }
 
-
+    public Client getClientById(int idClient) throws SQLException {
+        return clientService.getClientById(idClient);
     }
+
+    public void updateClient(Client client) throws SQLException {
+        clientService.updateClient(client);
+    }
+
+    public void deleteClient(int idClient) throws SQLException {
+        clientService.deleteClient(idClient);
+    }
+}
