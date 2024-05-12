@@ -15,7 +15,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
     @Override
     public void addSouscription(Souscription souscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "INSERT INTO Souscription (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO souscription (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));  // Convert to SQL Date
         statement.setString(2, souscription.getActif());
@@ -28,7 +28,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
     @Override
     public void updateSouscription(Souscription souscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "UPDATE Souscription SET dateHeureSous = ?, actif = ?, idClient = ?, idProduit = ? WHERE id = ?";
+        String sql = "UPDATE souscription SET dateHeureSous = ?, actif = ?, idClient = ?, idProduit = ? WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));
         statement.setString(2, souscription.getActif());
@@ -42,7 +42,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
     @Override
     public void deleteSouscription(int idSouscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "DELETE FROM Souscription WHERE id = ?";
+        String sql = "DELETE FROM souscription WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idSouscription);
         statement.executeUpdate();
@@ -53,7 +53,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
     public List<Souscription> getAllSouscriptions() throws SQLException {
         List<Souscription> souscriptions = new ArrayList<>();
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM Souscription";
+        String sql = "SELECT * FROM souscription";
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -73,7 +73,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
     @Override
     public Souscription getSouscriptionById(int idSouscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM Souscription WHERE id = ?";
+        String sql = "SELECT * FROM souscription WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idSouscription);
         ResultSet resultSet = statement.executeQuery();

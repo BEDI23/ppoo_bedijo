@@ -4,12 +4,16 @@
  */
 package ppoo_bedijo;
 
+import josue.entities.Client;
 import josue.entities.Produit;
 import josue.entities.Sms;
 import josue.entities.Souscription;
+import josue.managedbeans.ClientControleur;
 import josue.managedbeans.ProduitControleur;
 import josue.managedbeans.SmsControleur;
 import josue.managedbeans.SouscriptionControleur;
+import josue.services.SmsService;
+import josue.services.implementations.SmsServiceImpl;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -43,32 +47,47 @@ public class Ppoo_bedijo {
             System.out.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
         }
         */
+            // Initialisation des contrôleurs
+        // Ajouter les clients
+        ClientControleur clientControleur = new ClientControleur();
+        clientControleur.addClient(new Client("Jean", "Dupont", "1234567890"));
+        clientControleur.addClient(new Client("Alice", "Martin", "9876543210"));
+        clientControleur.addClient(new Client("Pierre", "Durand", "4567890123"));
+        clientControleur.addClient(new Client("Sophie", "Lefevre", "7890123456"));
 
+        // Ajouter les produits
+        ProduitControleur produitControleur = new ProduitControleur();
+        produitControleur.addProduit(new Produit("Epargne", "O"));
+        produitControleur.addProduit(new Produit("Courant", "N"));
+
+        // Effectuer les souscriptions
+
+        SouscriptionControleur souscriptionControleur = new SouscriptionControleur();
+        // Souscription pour le produit "Epargne" pour un client de votre choix
+        souscriptionControleur.addSouscription(new Souscription(1, new Date(), "O", 1, 1));
+        // Souscription pour le produit "Courant" pour un autre client de votre choix
+        souscriptionControleur.addSouscription(new Souscription(2, new Date(), "O", 2, 2));
+
+        // Enregistrer les SMS de souscription
         SmsControleur smsControleur = new SmsControleur();
-
-        // Création d'un SMS
-        Sms sms = new Sms(1, "Bonjour, ceci est un test de SMS !", true);
-
-        // Envoi du SMS
-        smsControleur.sendSms(sms);
-
-        // Récupération de tous les SMS
-        System.out.println("Tous les SMS : ");
-        List<Sms> allSms = smsControleur.getAllSms();
-        if (allSms != null) {
-            for (Sms s : allSms) {
-                System.out.println(s.getId() + ": " + s.getLibelle());
-            }
+        List<Souscription> souscriptions = souscriptionControleur.getAllSouscriptions();
+        for (Souscription souscription : souscriptions) {
+            Sms sms = new Sms(souscription.getIdClient(), "Votre souscription a été traitée avec succès.", true);
+            smsControleur.sendSms(sms);
         }
 
-        // Récupération des SMS en attente
-        System.out.println("SMS en attente : ");
+        // Afficher la liste des SMS
+        List<Sms> sentSms = smsControleur.getAllSms();
+        System.out.println("Liste des SMS déjà envoyés : ");
+        for (Sms sms : sentSms) {
+            System.out.println("ID: " + sms.getId() + ", Libellé: " + sms.getLibelle());
+        }
+
         List<Sms> pendingSms = smsControleur.getPendingSms();
-        if (pendingSms != null) {
-            for (Sms s : pendingSms) {
-                System.out.println(s.getId() + ": " + s.getLibelle());
-            }
+        System.out.println("\nListe des SMS en attente d'envoi : ");
+        for (Sms sms : pendingSms) {
+            System.out.println("ID: " + sms.getId() + ", Libellé: " + sms.getLibelle());
         }
 
-        }
+    }
 }

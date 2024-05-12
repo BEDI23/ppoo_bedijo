@@ -1,6 +1,8 @@
 package josue.services;
 
 import josue.entities.Client;
+import josue.entities.ClientParticulier;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,6 +17,5 @@ public interface ClientService {
      void updateClient(Client client) throws SQLException;
 
      void deleteClient(int idClient) throws SQLException;
-
 
 }
