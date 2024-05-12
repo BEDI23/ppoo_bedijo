@@ -1,6 +1,8 @@
 package josue.services.implementations;
 
+import josue.entities.Client;
 import josue.entities.ClientParticulier;
+import josue.managedbeans.ClientControleur;
 import josue.services.ClientParticulierService;
 import josue.utils.Connexion;
 
@@ -15,18 +17,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static josue.utils.Connexion.connection;
+
 public class ClientParticulierServiceImpl implements ClientParticulierService {
 
     @Override
     public void addClientParticulier(ClientParticulier client) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "INSERT INTO client_particulier (nom, prenom, telephone, date_naissance, lieu_naissance) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO clientparticulier (id_client, date_naissance, lieu_naissance) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, client.getNom());
-        statement.setString(2, client.getPrenom());
-        statement.setString(3, client.getTelephone());
-        statement.setDate(4, new java.sql.Date(client.getDateNaissance().getTime()));
-        statement.setString(5, client.getLieuNaissance());
+        statement.setInt(1, client.getId());
+        statement.setDate(2, new java.sql.Date(client.getDateNaissance().getTime()));
+        statement.setString(3, client.getLieuNaissance());
         statement.executeUpdate();
         connection.close();
     }
@@ -34,7 +36,7 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
     @Override
     public void updateClientParticulier(ClientParticulier client) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "UPDATE client_particulier SET nom = ?, prenom = ?, telephone = ?, date_naissance = ?, lieu_naissance = ? WHERE id = ?";
+        String sql = "UPDATE clientparticulier SET nom = ?, prenom = ?, telephone = ?, date_naissance = ?, lieu_naissance = ? WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, client.getNom());
         statement.setString(2, client.getPrenom());
@@ -49,7 +51,7 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
     @Override
     public void deleteClientParticulier(int idClient) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "DELETE FROM client_particulier WHERE id = ?";
+        String sql = "DELETE FROM clientparticulier WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idClient);
         statement.executeUpdate();
@@ -58,18 +60,16 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
 
     @Override
     public ClientParticulier findClientParticulier(int idClient) throws SQLException {
+
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM client_particulier WHERE id = ?";
+        String sql = "SELECT * FROM clientparticulier WHERE id_client = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idClient);
         ResultSet resultSet = statement.executeQuery();
         ClientParticulier clientParticulier = null;
         if (resultSet.next()) {
             clientParticulier = new ClientParticulier();
-            clientParticulier.setId(resultSet.getInt("id"));
-            clientParticulier.setNom(resultSet.getString("nom"));
-            clientParticulier.setPrenom(resultSet.getString("prenom"));
-            clientParticulier.setTelephone(resultSet.getString("telephone"));
+            clientParticulier.setId(resultSet.getInt("id_client"));
             clientParticulier.setDateNaissance(resultSet.getDate("date_naissance"));
             clientParticulier.setLieuNaissance(resultSet.getString("lieu_naissance"));
         }
@@ -96,7 +96,7 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
     public List<ClientParticulier> getClientParticulierList() throws SQLException {
         List<ClientParticulier> clientsParticuliers = new ArrayList<>();
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM client_particulier";
+        String sql = "SELECT * FROM clientparticulier";
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -119,7 +119,7 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
 
         // Connexion à la base de données et exécution de la requête SQL
         try (Connection connection = Connexion.getConnection()) {
-            String sql = "SELECT * FROM client_particulier WHERE DATE_ADD(date_naissance, INTERVAL 18 YEAR) <= NOW()";
+            String sql = "SELECT * FROM clientparticulier WHERE DATE_ADD(date_naissance, INTERVAL 18 YEAR) <= NOW()";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 

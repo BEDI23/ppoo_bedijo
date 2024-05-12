@@ -1,7 +1,6 @@
 package josue.services;
 
 import josue.entities.Client;
-import josue.entities.ClientParticulier;
 
 import java.sql.SQLException;
 import java.util.List;

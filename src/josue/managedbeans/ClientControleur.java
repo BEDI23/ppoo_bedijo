@@ -20,6 +20,7 @@ public class ClientControleur {
 
     public Client getClientById(int idClient) throws SQLException {
         return clientService.getClientById(idClient);
+
     }
 
     public void updateClient(Client client) throws SQLException {

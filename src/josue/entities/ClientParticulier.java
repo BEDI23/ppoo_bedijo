@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class ClientParticulier extends  Client {
 
+    private int idClient;
     private Date dateNaissance;
     private String lieuNaissance;
 
@@ -15,15 +16,22 @@ public class ClientParticulier extends  Client {
     }
 
     public ClientParticulier() {
+
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
     }
 
-
+    public ClientParticulier(int idClient, Date dateNaissance, String lieuNaissance) {
+        this.idClient = idClient;
+        this.dateNaissance = dateNaissance;
+        this.lieuNaissance = lieuNaissance;
+    }
 
     public Date getDateNaissance() {
         return dateNaissance;
     }
+
+
 
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;

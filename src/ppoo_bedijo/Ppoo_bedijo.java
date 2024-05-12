@@ -4,16 +4,8 @@
  */
 package ppoo_bedijo;
 
-import josue.entities.Client;
-import josue.entities.Produit;
-import josue.entities.Sms;
-import josue.entities.Souscription;
-import josue.managedbeans.ClientControleur;
-import josue.managedbeans.ProduitControleur;
-import josue.managedbeans.SmsControleur;
-import josue.managedbeans.SouscriptionControleur;
-import josue.services.SmsService;
-import josue.services.implementations.SmsServiceImpl;
+import josue.entities.*;
+import josue.managedbeans.*;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -47,6 +39,7 @@ public class Ppoo_bedijo {
             System.out.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
         }
         */
+        /*
             // Initialisation des contrôleurs
         // Ajouter les clients
         ClientControleur clientControleur = new ClientControleur();
@@ -88,6 +81,36 @@ public class Ppoo_bedijo {
         for (Sms sms : pendingSms) {
             System.out.println("ID: " + sms.getId() + ", Libellé: " + sms.getLibelle());
         }
+            */
 
+        ClientParticulierControleur clientParticulierController = new ClientParticulierControleur();
+
+        // Ajouter un client particulier
+      /*  ClientParticulier client1 = new ClientParticulier();
+        client1.setId(32);
+        client1.setDateNaissance(new Date(10/9/2022)); // Remplacez new Date() par la date de naissance souhaitée
+        client1.setLieuNaissance("Paris");
+        clientParticulierController.addClientParticulier(client1);*/
+
+        // Lire un client particulier par son ID
+        ClientParticulier client = clientParticulierController.getClientParticulier(32);
+        System.out.println("Client lu : " + client.getNom());
+        /*
+        // Mettre à jour un client particulier
+        ClientParticulier clientToUpdate = clientParticulierController.getClientParticulier(1);
+        clientToUpdate.setNom("Jane");
+        clientToUpdate.setPrenom("Doe");
+        clientParticulierController.updateClientParticulier(1, clientToUpdate);
+
+        // Supprimer un client particulier
+        clientParticulierController.deleteClientParticulier(1);*/
+
+        // Lister tous les clients particuliers
+       /* List<ClientParticulier> clients = clientParticulierController.getClientParticulierList();
+        System.out.println("Liste des clients particuliers : " + clients);*/
+
+       /* // Lister tous les clients particuliers adultes
+        List<ClientParticulier> adultClients = clientParticulierController.getAdultClientParticulierList();
+        System.out.println("Liste des clients particuliers adultes : " + adultClients);*/
     }
 }
