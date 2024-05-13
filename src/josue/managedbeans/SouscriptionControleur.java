@@ -17,7 +17,7 @@ public class SouscriptionControleur {
         boolean isParticulier = clientParticulierControleur.isClientParticulier(souscription.getIdClient());
         boolean isAdultParticulier = isParticulier && isAdultClientParticulier(souscription.getIdClient());
 
-        if (isAdultParticulier && !souscription.getActif().equals("Epargne")) {
+        if (!isAdultParticulier && souscription.getActif().equals("Epargne")) {
             System.out.println("Vous ne pouvez pas souscrire à l'épargne.");
         } else {
             souscriptionService.addSouscription(souscription);

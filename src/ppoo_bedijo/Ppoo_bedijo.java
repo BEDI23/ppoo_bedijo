@@ -53,7 +53,7 @@ public class Ppoo_bedijo {
         produitControleur.addProduit(new Produit("Epargne", "A"));
         produitControleur.addProduit(new Produit("Courant", "N"));
 */
-        // Effectuer les souscriptions
+        /*// Effectuer les souscriptions
 
         SouscriptionControleur souscriptionControleur = new SouscriptionControleur();
 
@@ -62,13 +62,13 @@ public class Ppoo_bedijo {
         // Souscription pour le produit "Courant" pour un autre client de votre choix
         souscriptionControleur.addSouscription(new Souscription(2, new Date(), "N", 35, 35));
 
-        // Enregistrer les SMS de souscription
+        // Enregistrer les SMS de souscription*/
         SmsControleur smsControleur = new SmsControleur();
-        List<Souscription> souscriptions = souscriptionControleur.getAllSouscriptions();
+        /*List<Souscription> souscriptions = souscriptionControleur.getAllSouscriptions();
         for (Souscription souscription : souscriptions) {
             Sms sms = new Sms(souscription.getIdClient(), "Votre souscription a été traitée avec succès.", true);
             smsControleur.sendSms(sms);
-        }
+        }*/
 
         // Afficher la liste des SMS
         List<Sms> sentSms = smsControleur.getAllSms();
@@ -88,12 +88,12 @@ public class Ppoo_bedijo {
 
         // Ajouter un client particulier
         ClientParticulier client1 = new ClientParticulier();
-        client1.setId(30);
+        client1.setId(35);
         client1.setDateNaissance(new Date(10/9/2022)); // Remplacez new Date() par la date de naissance souhaitée
         client1.setLieuNaissance("Paris");
-        clientParticulierController.addClientParticulier(client1);
+        clientParticulierController.addClientParticulier(client1);*/
 
-        // Lire un client particulier par son ID
+/*        // Lire un client particulier par son ID
         ClientParticulier client = clientParticulierController.getClientParticulier(30);
         System.out.println("Client lu : " + client.getLieuNaissance());
 

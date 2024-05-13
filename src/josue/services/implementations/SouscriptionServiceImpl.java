@@ -23,7 +23,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
 
     private void addSouscriptionClientParticulier(Souscription souscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "INSERT INTO souscription_client_particulier (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO souscription (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));
         statement.setString(2, souscription.getActif());
@@ -35,7 +35,7 @@ public class SouscriptionServiceImpl implements SouscriptionService {
 
     private void addSouscriptionClient(Souscription souscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "INSERT INTO souscription_client_normal (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO souscription (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));
         statement.setString(2, souscription.getActif());
