@@ -19,7 +19,6 @@ public class ClientParticulierControleur {
     ClientControleur clientControleur = new ClientControleur();
 
     public void addClientParticulier(ClientParticulier client) throws SQLException {
-        Client client1 = clientControleur.getClientById(client.getId());
 
             clientParticulierService.addClientParticulier(client);
 
