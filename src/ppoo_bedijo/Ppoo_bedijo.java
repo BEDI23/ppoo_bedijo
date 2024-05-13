@@ -188,7 +188,7 @@ public class Ppoo_bedijo {
             System.out.println("Erreur lors de l'ajout de la souscription : " + e.getMessage());
         }
 */
-        // Recherche du client par son nom
+       /* // Recherche du client par son nom
         System.out.println("Entrez le nom du client que vous souhaitez transformer en client particulier :");
         String nomClient = scanner.nextLine();
 
@@ -220,6 +220,10 @@ public class Ppoo_bedijo {
             clientParticulierControleur.addClientParticulier(clientParticulier);
             System.out.println("Client particulier ajouté avec succès !");
         }
+*/
+
+        System.out.println("Bienvenue \n  Veuillez suivre les indication ");
+
 
 
     }

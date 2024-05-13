@@ -20,11 +20,9 @@ public class ClientParticulierControleur {
 
     public void addClientParticulier(ClientParticulier client) throws SQLException {
         Client client1 = clientControleur.getClientById(client.getId());
-        if (client1 == null){
-            System.out.println("Cet client pour cet identifiant n'existe pas ");
-        }else {
+
             clientParticulierService.addClientParticulier(client);
-        }
+
     }
 
     public void updateClientParticulier( int id,  ClientParticulier client) throws SQLException {
