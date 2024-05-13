@@ -23,6 +23,11 @@ public class ClientControleur {
 
     }
 
+    public Client getClientByNom(String nom) throws SQLException {
+        return clientService.getClientByNom(nom);
+
+    }
+
     public void updateClient(Client client) throws SQLException {
         clientService.updateClient(client);
     }

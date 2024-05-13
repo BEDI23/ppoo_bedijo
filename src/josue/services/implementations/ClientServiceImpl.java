@@ -48,9 +48,29 @@ public class ClientServiceImpl implements ClientService {
         }
         connection.close();
         return client;
+
+
+    } @Override
+    public Client getClientByNom(String nom) throws SQLException {
+        Connection connection = Connexion.getConnection();
+        String sql = "SELECT * FROM client WHERE nom = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, nom);
+        ResultSet resultSet = statement.executeQuery();
+        Client client = null;
+        if (resultSet.next()) {
+            client = new Client();
+            client.setId(resultSet.getInt("id"));
+            client.setNom(resultSet.getString("nom"));
+            client.setPrenom(resultSet.getString("prenom"));
+            client.setTelephone(resultSet.getString("telephone"));
+        }
+        connection.close();
+        return client;
     }
 
-    @Override
+
+        @Override
     public void addClient(Client client) throws SQLException {
         Connection connection = Connexion.getConnection();
         String sql = "INSERT INTO client (nom, prenom, telephone) VALUES (?, ?, ?)";

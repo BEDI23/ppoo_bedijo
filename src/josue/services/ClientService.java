@@ -9,6 +9,8 @@ public interface ClientService {
 
      List<Client> getAllClients() throws SQLException;
 
+     Client getClientByNom(String nom) throws SQLException;
+
      Client getClientById(int idClient) throws SQLException;
 
      void addClient(Client client) throws SQLException;

@@ -10,6 +10,8 @@ import josue.utils.Connexion;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +25,7 @@ public class Ppoo_bedijo {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ParseException {
         /*try {
             // Récupération de la connexion
             Connection connexion = Connexion.getConnection();
@@ -120,6 +122,7 @@ public class Ppoo_bedijo {
         System.out.println("Liste des clients particuliers adultes : " + adultClients);*/
 
 
+        ClientParticulierControleur clientParticulierControleur = new ClientParticulierControleur();
         ClientControleur clientControleur = new ClientControleur();
         ProduitControleur produitControleur = new ProduitControleur();
         SouscriptionControleur souscriptionControleur = new SouscriptionControleur();
@@ -170,6 +173,7 @@ public class Ppoo_bedijo {
             System.out.println("Erreur lors de l'ajout du produit : " + e.getMessage());
         }
 */
+/*
 
         // Ajout d'une souscription
         try {
@@ -182,6 +186,39 @@ public class Ppoo_bedijo {
             System.out.println("Souscription ajoutée avec succès !");
         } catch (SQLException | NumberFormatException e) {
             System.out.println("Erreur lors de l'ajout de la souscription : " + e.getMessage());
+        }
+*/
+        // Recherche du client par son nom
+        System.out.println("Entrez le nom du client que vous souhaitez transformer en client particulier :");
+        String nomClient = scanner.nextLine();
+
+        Client client = clientControleur.getClientByNom(nomClient);
+        if (client == null) {
+            System.out.println("Aucun client trouvé avec ce nom.");
+        } else {
+            // Afficher les informations du client trouvé
+            System.out.println("Informations du client trouvé :");
+            System.out.println("ID : " + client.getId());
+            System.out.println("Nom : " + client.getNom());
+            System.out.println("Prénom : " + client.getPrenom());
+            System.out.println("Téléphone : " + client.getTelephone());
+
+            // Demander les informations supplémentaires pour le client particulier
+            System.out.println("Entrez la date de naissance du client (format: yyyy-MM-dd) :");
+            String dateNaissanceStr = scanner.nextLine();
+            System.out.println("Entrez le lieu de naissance du client :");
+            String lieuNaissance = scanner.nextLine();
+
+            // Conversion de la date de naissance en objet Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateNaissance = sdf.parse(dateNaissanceStr);
+
+            // Création d'un nouvel objet ClientParticulier avec les informations supplémentaires
+            ClientParticulier clientParticulier = new ClientParticulier(client.getId(), dateNaissance, lieuNaissance);
+
+            // Appel de la méthode d'ajout du client particulier dans le contrôleur
+            clientParticulierControleur.addClientParticulier(clientParticulier);
+            System.out.println("Client particulier ajouté avec succès !");
         }
 
 
