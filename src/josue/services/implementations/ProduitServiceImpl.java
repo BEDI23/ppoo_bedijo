@@ -49,6 +49,8 @@ public class ProduitServiceImpl implements ProduitService {
         return produit;
     }
 
+
+
     @Override
     public void addProduit(Produit produit) throws SQLException {
         Connection connection = Connexion.getConnection();

@@ -1,8 +1,6 @@
 package josue.services.implementations;
 
-import josue.entities.Client;
 import josue.entities.ClientParticulier;
-import josue.managedbeans.ClientControleur;
 import josue.services.ClientParticulierService;
 import josue.utils.Connexion;
 
@@ -16,8 +14,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static josue.utils.Connexion.connection;
 
 public class ClientParticulierServiceImpl implements ClientParticulierService {
 
@@ -36,14 +32,11 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
     @Override
     public void updateClientParticulier(ClientParticulier client) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "UPDATE clientparticulier SET nom = ?, prenom = ?, telephone = ?, date_naissance = ?, lieu_naissance = ? WHERE id = ?";
+        String sql = "UPDATE clientparticulier SET date_naissance = ?, lieu_naissance = ? WHERE id_client = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, client.getNom());
-        statement.setString(2, client.getPrenom());
-        statement.setString(3, client.getTelephone());
-        statement.setDate(4, new java.sql.Date(client.getDateNaissance().getTime()));
-        statement.setString(5, client.getLieuNaissance());
-        statement.setInt(6, client.getId());
+        statement.setDate(1, new java.sql.Date(client.getDateNaissance().getTime()));
+        statement.setString(2, client.getLieuNaissance());
+        statement.setInt(3, client.getId());
         statement.executeUpdate();
         connection.close();
     }
@@ -51,7 +44,7 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
     @Override
     public void deleteClientParticulier(int idClient) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "DELETE FROM clientparticulier WHERE id = ?";
+        String sql = "DELETE FROM clientparticulier WHERE id_client = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idClient);
         statement.executeUpdate();
@@ -60,9 +53,11 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
 
     @Override
     public ClientParticulier findClientParticulier(int idClient) throws SQLException {
-
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM clientparticulier WHERE id_client = ?";
+        String sql = "SELECT cp.id_client, c.nom, c.prenom, c.telephone, cp.date_naissance, cp.lieu_naissance " +
+                "FROM clientparticulier cp " +
+                "INNER JOIN client c ON cp.id_client = c.id " +
+                "WHERE cp.id_client = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, idClient);
         ResultSet resultSet = statement.executeQuery();
@@ -70,6 +65,9 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
         if (resultSet.next()) {
             clientParticulier = new ClientParticulier();
             clientParticulier.setId(resultSet.getInt("id_client"));
+            clientParticulier.setNom(resultSet.getString("nom"));
+            clientParticulier.setPrenom(resultSet.getString("prenom"));
+            clientParticulier.setTelephone(resultSet.getString("telephone"));
             clientParticulier.setDateNaissance(resultSet.getDate("date_naissance"));
             clientParticulier.setLieuNaissance(resultSet.getString("lieu_naissance"));
         }
@@ -91,17 +89,18 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
         return age < 18;
     }
 
-
     @Override
     public List<ClientParticulier> getClientParticulierList() throws SQLException {
         List<ClientParticulier> clientsParticuliers = new ArrayList<>();
         Connection connection = Connexion.getConnection();
-        String sql = "SELECT * FROM clientparticulier";
+        String sql = "SELECT cp.id_client, c.nom, c.prenom, c.telephone, cp.date_naissance, cp.lieu_naissance " +
+                "FROM clientparticulier cp " +
+                "INNER JOIN client c ON cp.id_client = c.id";
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             ClientParticulier clientParticulier = new ClientParticulier();
-            clientParticulier.setId(resultSet.getInt("id"));
+            clientParticulier.setId(resultSet.getInt("id_client"));
             clientParticulier.setNom(resultSet.getString("nom"));
             clientParticulier.setPrenom(resultSet.getString("prenom"));
             clientParticulier.setTelephone(resultSet.getString("telephone"));
@@ -119,13 +118,16 @@ public class ClientParticulierServiceImpl implements ClientParticulierService {
 
         // Connexion à la base de données et exécution de la requête SQL
         try (Connection connection = Connexion.getConnection()) {
-            String sql = "SELECT * FROM clientparticulier WHERE DATE_ADD(date_naissance, INTERVAL 18 YEAR) <= NOW()";
+            String sql = "SELECT cp.id_client, c.nom, c.prenom, c.telephone, cp.date_naissance, cp.lieu_naissance " +
+                    "FROM clientparticulier cp " +
+                    "INNER JOIN client c ON cp.id_client = c.id " +
+                    "WHERE DATE_ADD(cp.date_naissance, INTERVAL 18 YEAR) <= NOW()";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
             // Parcours des résultats de la requête
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("id_client");
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String telephone = resultSet.getString("telephone");

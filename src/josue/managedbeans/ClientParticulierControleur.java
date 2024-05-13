@@ -4,8 +4,12 @@ import josue.entities.Client;
 import josue.entities.ClientParticulier;
 import josue.services.ClientParticulierService;
 import josue.services.implementations.ClientParticulierServiceImpl;
+import josue.utils.Connexion;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -47,5 +51,36 @@ public class ClientParticulierControleur {
     public boolean checkAge( int id) throws SQLException {
         ClientParticulier client = clientParticulierService.findClientParticulier(id);
         return clientParticulierService.checkAge(client);
+    }
+
+    public boolean isClientParticulier(int idClient) throws SQLException {
+        boolean isParticulier = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = Connexion.getConnection();
+            String sql = "SELECT id_client FROM clientparticulier WHERE id_client = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idClient);
+            resultSet = statement.executeQuery();
+
+            // Si une ligne est retournée, le client est un client particulier
+            isParticulier = resultSet.next();
+        } finally {
+            // Fermer les ressources JDBC dans le bloc finally pour éviter les fuites de ressources
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return isParticulier;
     }
 }

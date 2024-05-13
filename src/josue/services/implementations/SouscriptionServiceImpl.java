@@ -14,15 +14,66 @@ public class SouscriptionServiceImpl implements SouscriptionService {
 
     @Override
     public void addSouscription(Souscription souscription) throws SQLException {
+        if (isClientParticulier(souscription.getIdClient())) {
+            addSouscriptionClientParticulier(souscription);
+        } else {
+            addSouscriptionClient(souscription);
+        }
+    }
+
+    private void addSouscriptionClientParticulier(Souscription souscription) throws SQLException {
         Connection connection = Connexion.getConnection();
-        String sql = "INSERT INTO souscription (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO souscription_client_particulier (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));  // Convert to SQL Date
+        statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));
         statement.setString(2, souscription.getActif());
         statement.setInt(3, souscription.getIdClient());
         statement.setInt(4, souscription.getIdProduit());
         statement.executeUpdate();
         connection.close();
+    }
+
+    private void addSouscriptionClient(Souscription souscription) throws SQLException {
+        Connection connection = Connexion.getConnection();
+        String sql = "INSERT INTO souscription_client_normal (dateHeureSous, actif, idClient, idProduit) VALUES (?, ?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setDate(1, new java.sql.Date(souscription.getDateHeureSous().getTime()));
+        statement.setString(2, souscription.getActif());
+        statement.setInt(3, souscription.getIdClient());
+        statement.setInt(4, souscription.getIdProduit());
+        statement.executeUpdate();
+        connection.close();
+    }
+
+    public boolean isClientParticulier(int idClient) throws SQLException {
+        boolean isParticulier = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = Connexion.getConnection();
+            String sql = "SELECT id_client FROM clientparticulier WHERE id_client = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idClient);
+            resultSet = statement.executeQuery();
+
+            // Si une ligne est retournée, le client est un client particulier
+            isParticulier = resultSet.next();
+        } finally {
+            // Fermer les ressources JDBC dans le bloc finally pour éviter les fuites de ressources
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return isParticulier;
     }
 
     @Override

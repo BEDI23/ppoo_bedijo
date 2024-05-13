@@ -39,27 +39,28 @@ public class Ppoo_bedijo {
             System.out.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
         }
         */
-        /*
+
             // Initialisation des contrôleurs
-        // Ajouter les clients
+       /* // Ajouter les clients
         ClientControleur clientControleur = new ClientControleur();
         clientControleur.addClient(new Client("Jean", "Dupont", "1234567890"));
         clientControleur.addClient(new Client("Alice", "Martin", "9876543210"));
         clientControleur.addClient(new Client("Pierre", "Durand", "4567890123"));
         clientControleur.addClient(new Client("Sophie", "Lefevre", "7890123456"));
-
+*/
         // Ajouter les produits
-        ProduitControleur produitControleur = new ProduitControleur();
-        produitControleur.addProduit(new Produit("Epargne", "O"));
+      /*  ProduitControleur produitControleur = new ProduitControleur();
+        produitControleur.addProduit(new Produit("Epargne", "A"));
         produitControleur.addProduit(new Produit("Courant", "N"));
-
+*/
         // Effectuer les souscriptions
 
         SouscriptionControleur souscriptionControleur = new SouscriptionControleur();
+
         // Souscription pour le produit "Epargne" pour un client de votre choix
-        souscriptionControleur.addSouscription(new Souscription(1, new Date(), "O", 1, 1));
+        souscriptionControleur.addSouscription(new Souscription(1, new Date(), "A", 35, 35));
         // Souscription pour le produit "Courant" pour un autre client de votre choix
-        souscriptionControleur.addSouscription(new Souscription(2, new Date(), "O", 2, 2));
+        souscriptionControleur.addSouscription(new Souscription(2, new Date(), "N", 35, 35));
 
         // Enregistrer les SMS de souscription
         SmsControleur smsControleur = new SmsControleur();
@@ -81,35 +82,35 @@ public class Ppoo_bedijo {
         for (Sms sms : pendingSms) {
             System.out.println("ID: " + sms.getId() + ", Libellé: " + sms.getLibelle());
         }
-            */
 
-        ClientParticulierControleur clientParticulierController = new ClientParticulierControleur();
+
+       /* ClientParticulierControleur clientParticulierController = new ClientParticulierControleur();
 
         // Ajouter un client particulier
-      /*  ClientParticulier client1 = new ClientParticulier();
-        client1.setId(32);
+        ClientParticulier client1 = new ClientParticulier();
+        client1.setId(30);
         client1.setDateNaissance(new Date(10/9/2022)); // Remplacez new Date() par la date de naissance souhaitée
         client1.setLieuNaissance("Paris");
-        clientParticulierController.addClientParticulier(client1);*/
+        clientParticulierController.addClientParticulier(client1);
 
         // Lire un client particulier par son ID
-        ClientParticulier client = clientParticulierController.getClientParticulier(32);
-        System.out.println("Client lu : " + client.getNom());
-        /*
+        ClientParticulier client = clientParticulierController.getClientParticulier(30);
+        System.out.println("Client lu : " + client.getLieuNaissance());
+
         // Mettre à jour un client particulier
-        ClientParticulier clientToUpdate = clientParticulierController.getClientParticulier(1);
+        ClientParticulier clientToUpdate = clientParticulierController.getClientParticulier(30);
         clientToUpdate.setNom("Jane");
         clientToUpdate.setPrenom("Doe");
-        clientParticulierController.updateClientParticulier(1, clientToUpdate);
+        clientParticulierController.updateClientParticulier(30, clientToUpdate);
 
         // Supprimer un client particulier
-        clientParticulierController.deleteClientParticulier(1);*/
+        clientParticulierController.deleteClientParticulier(30);
 
         // Lister tous les clients particuliers
-       /* List<ClientParticulier> clients = clientParticulierController.getClientParticulierList();
-        System.out.println("Liste des clients particuliers : " + clients);*/
+        List<ClientParticulier> clients = clientParticulierController.getClientParticulierList();
+        System.out.println("Liste des clients particuliers : " + clients);
 
-       /* // Lister tous les clients particuliers adultes
+        // Lister tous les clients particuliers adultes
         List<ClientParticulier> adultClients = clientParticulierController.getAdultClientParticulierList();
         System.out.println("Liste des clients particuliers adultes : " + adultClients);*/
     }

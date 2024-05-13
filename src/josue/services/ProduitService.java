@@ -17,4 +17,5 @@ public interface ProduitService {
 
          Produit getProduitById(int idProduit) throws SQLException;
 
-}
+
+    }

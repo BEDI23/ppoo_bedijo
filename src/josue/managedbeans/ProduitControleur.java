@@ -11,7 +11,18 @@ public class ProduitControleur {
     private ProduitService produitService = new ProduitServiceImpl();
 
     public void addProduit(Produit produit) throws SQLException {
-        produitService.addProduit(produit);
+        // Vérification de la valeur de l'attribut "actif"
+        if (produit.getActif().equals("A") || produit.getActif().equals("N")) {
+            // Vérification de la valeur de l'attribut "Libelle"
+            if (produit.getLibelle().equals("Epargne") || produit.getLibelle().equals("Courant")) {
+                produitService.addProduit(produit);
+            } else {
+                System.out.println("La valeur de l'attribut 'Libelle' doit être 'Epargne' ou 'Courant'.");
+            }
+        } else {
+            // Si la valeur n'est ni "A" ni "N", afficher un message d'erreur
+            System.out.println("La valeur de l'attribut 'actif' doit être 'A' pour actif ou 'N' pour non actif.");
+        }
     }
 
     public List<Produit> getAllProduits() throws SQLException {
