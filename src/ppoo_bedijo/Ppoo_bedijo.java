@@ -6,10 +6,13 @@ package ppoo_bedijo;
 
 import josue.entities.*;
 import josue.managedbeans.*;
+import josue.utils.Connexion;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Ppoo_bedijo {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException {
-      /*  try {
+        /*try {
             // Récupération de la connexion
             Connection connexion = Connexion.getConnection();
 
@@ -38,7 +41,7 @@ public class Ppoo_bedijo {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
         }
-        */
+*/
 
             // Initialisation des contrôleurs
        /* // Ajouter les clients
@@ -63,7 +66,9 @@ public class Ppoo_bedijo {
         souscriptionControleur.addSouscription(new Souscription(2, new Date(), "N", 35, 35));
 
         // Enregistrer les SMS de souscription*/
+/*
         SmsControleur smsControleur = new SmsControleur();
+*/
         /*List<Souscription> souscriptions = souscriptionControleur.getAllSouscriptions();
         for (Souscription souscription : souscriptions) {
             Sms sms = new Sms(souscription.getIdClient(), "Votre souscription a été traitée avec succès.", true);
@@ -71,7 +76,7 @@ public class Ppoo_bedijo {
         }*/
 
         // Afficher la liste des SMS
-        List<Sms> sentSms = smsControleur.getAllSms();
+        /*List<Sms> sentSms = smsControleur.getAllSms();
         System.out.println("Liste des SMS déjà envoyés : ");
         for (Sms sms : sentSms) {
             System.out.println("ID: " + sms.getId() + ", Libellé: " + sms.getLibelle());
@@ -81,7 +86,7 @@ public class Ppoo_bedijo {
         System.out.println("\nListe des SMS en attente d'envoi : ");
         for (Sms sms : pendingSms) {
             System.out.println("ID: " + sms.getId() + ", Libellé: " + sms.getLibelle());
-        }
+        }*/
 
 
        /* ClientParticulierControleur clientParticulierController = new ClientParticulierControleur();
@@ -113,5 +118,72 @@ public class Ppoo_bedijo {
         // Lister tous les clients particuliers adultes
         List<ClientParticulier> adultClients = clientParticulierController.getAdultClientParticulierList();
         System.out.println("Liste des clients particuliers adultes : " + adultClients);*/
+
+
+        ClientControleur clientControleur = new ClientControleur();
+        ProduitControleur produitControleur = new ProduitControleur();
+        SouscriptionControleur souscriptionControleur = new SouscriptionControleur();
+        SmsControleur smsControleur = new SmsControleur();
+        Scanner scanner = new Scanner(System.in);
+
+        // Boucle pour imposer d'ajouter des clients
+       /* boolean ajoutClient = true;
+        while (ajoutClient) {
+            // Demander à l'utilisateur de saisir les informations du client
+            System.out.println("Ajout d'un client :");
+            System.out.println("Saisissez le nom du client :");
+            String nom = scanner.nextLine();
+            System.out.println("Saisissez le prénom du client :");
+            String prenom = scanner.nextLine();
+            System.out.println("Saisissez le téléphone du client :");
+            String telephone = scanner.nextLine();
+
+            // Ajouter le client
+            try {
+                clientControleur.addClient(new Client(nom, prenom, telephone));
+                System.out.println("Client ajouté avec succès !");
+                ajoutClient = false; // Sortir de la boucle après l'ajout réussi du client
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de l'ajout du client : " + e.getMessage());
+                System.out.println("Veuillez réessayer.");
+            }
+        }*/
+
+        // Ajout d'un produit
+        /*try {
+            System.out.println("Ajout d'un produit :");
+            System.out.println("Saisissez le libellé du produit (Epargne ou Courant) :");
+            String libelleProduit = scanner.nextLine();
+            if (!libelleProduit.equals("Epargne") && !libelleProduit.equals("Courant")) {
+                throw new IllegalArgumentException("Le libellé du produit doit être 'Epargne' ou 'Courant'.");
+            }
+
+            System.out.println("Saisissez l'état du produit (A pour actif, N pour non actif) :");
+            String etatProduit = scanner.nextLine();
+            if (!etatProduit.equals("A") && !etatProduit.equals("N")) {
+                throw new IllegalArgumentException("L'état du produit doit être 'A' pour actif ou 'N' pour non actif.");
+            }
+
+            produitControleur.addProduit(new Produit(libelleProduit, etatProduit));
+            System.out.println("Produit ajouté avec succès !");
+        } catch (SQLException | IllegalArgumentException e) {
+            System.out.println("Erreur lors de l'ajout du produit : " + e.getMessage());
+        }
+*/
+
+        // Ajout d'une souscription
+        try {
+            System.out.println("Ajout d'une souscription :");
+            System.out.println("Saisissez l'ID du client :");
+            int idClient = Integer.parseInt(scanner.nextLine());
+            System.out.println("Saisissez l'ID du produit :");
+            int idProduit = Integer.parseInt(scanner.nextLine());
+            souscriptionControleur.addSouscription(new Souscription(new Date(), "A", idClient, idProduit));
+            System.out.println("Souscription ajoutée avec succès !");
+        } catch (SQLException | NumberFormatException e) {
+            System.out.println("Erreur lors de l'ajout de la souscription : " + e.getMessage());
+        }
+
+
     }
 }
